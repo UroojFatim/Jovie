@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Reports</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f4f7fc;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #f15d30;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        .report-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .report-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .report-item p {
+            font-size: 1rem;
+            margin: 10px 0;
+            color: #666;
+        }
+        
+        .report-item .date {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .report-item .marks {
+            color: #f15d30;
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #f15d30;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e14a2d;
+        }
+        
+        .no-reports {
+            font-size: 1.2rem;
+            color: #999;
+            margin-top: 20px;
+        }
+        
+        .back-btn {
+            font-size: 1rem;
+            color: #f15d30;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            color: #e14a2d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Saved Reports</h1>
+
+        {% if results %}
+        <div id="reports-list">
+            {% for result in results %}
+            <div class="report-item">
+                <p class="date">Quiz Taken on: {{ result.created_at }}</p>
+                <p class="marks">Total Marks: {{ result.total_marks }} | Percentage: {{ result.percentage }}%</p>
+                <p>Suggestions: {{ result.suggestions }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-reports">No saved reports found.</p>
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="btn-primary back-btn">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+    </div>
+
+    <script>
+        // JavaScript for smooth transitions
+        document.querySelectorAll('.report-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateY(-10px)';
+                item.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.2)';
+            });
+
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateY(0)';
+                item.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.1)';
+            });
+        });
+    </script>
+</body>
+
+</html>
